@@ -27,7 +27,7 @@ namespace RegawMOD.Android
         /// Initializes a new instance of the Device class
         /// </summary>
         /// <param name="deviceSerial">Serial number of Android device</param>
-        internal Device(string deviceSerial)
+        public Device(string deviceSerial)
         {
             this.serialNumber = deviceSerial;
             Update();
@@ -230,6 +230,17 @@ namespace RegawMOD.Android
         {
             AdbCommand adbCmd = Adb.FormAdbCommand(this, "pull", "\"" + (location.EndsWith("/") ? location : location + "/") + "\"", "\"" + destination + "\"");
             return (Adb.ExecuteAdbCommandReturnExitCode(adbCmd) == 0);
+        }
+
+        /// <summary>
+        /// Lists the full directory from the device
+        /// </summary>
+        /// <param name="location">Path to the folder to list from the device</param>
+        /// <returns>A list of files, directories, etc in long listing format</returns>
+        public string ListDirectory(string location)
+        {
+            AdbCommand adbCmd = Adb.FormAdbShellCommand(this, false, "ls", "-l", location);
+            return Adb.ExecuteAdbCommand(adbCmd);
         }
 
         /// <summary>
