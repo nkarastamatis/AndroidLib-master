@@ -244,6 +244,17 @@ namespace RegawMOD.Android
         }
 
         /// <summary>
+        /// Deletes a file from the device
+        /// </summary>
+        /// <param name="location">Path to the file to delete from the device</param>
+        /// <returns></returns>
+        public string DeleteFile(string location)
+        {
+            AdbCommand adbCmd = Adb.FormAdbShellCommand(this, false, "rm", location);
+            return Adb.ExecuteAdbCommand(adbCmd);
+        }
+
+        /// <summary>
         /// Installs an application from the local computer to the Android device
         /// </summary>
         /// <param name="location">Full path of apk on computer</param>
